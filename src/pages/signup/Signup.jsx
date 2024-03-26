@@ -40,7 +40,7 @@ function SignUp () {
 
         api({
             method: 'POST',
-            url: '/users/create',
+            url: '/user/create',
             data: dataUser
         })
         .then((_) => {
@@ -85,7 +85,7 @@ function SignUp () {
 
         api({
             method: 'PATCH',
-            url: '/users/pin/add',
+            url: '/user/pin/add',
             data: {pin : pin.join(''), email: dataUser.email}
         })
         .then((_) => {
@@ -164,7 +164,7 @@ function SignUp () {
                                 </button>
                             </div>
                             <button className="bg-[#88888f3f] hover:bg-primary hover:text-white text-[#88888F] rounded-[8px] p-4 mt-10" type="submit">Sign Up</button>
-                            <span className="self-center mt-4">Already have an account? Let’s <a className="text-primary" href="">Login</a></span>
+                            <span className="self-center mt-4">Already have an account? Let’s <a className="text-primary" href="/login">Login</a></span>
                         </form>
                     </section>
                 :
