@@ -34,7 +34,6 @@ const sidebarLinks = [
 const SidebarLink = ({ title, icon, route }) => {
   const location = useLocation()
   const isActive = location.pathname === route
-  console.log(route)
   return (
     <li>
       <Link

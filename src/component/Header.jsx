@@ -33,7 +33,7 @@ function Header() {
                 />
                 <AvatarFallback>JL</AvatarFallback>
               </Avatar>
-              <div className='grid gap-1 *:text-type '>
+              <div className='grid gap-1 *:text-dark '>
                 <span className='sm:hidden text-[#3A3D42E5]'>Hello,</span>
                 <p className='text-lg  font-bold leading-none'>
                   Robert Chandler
@@ -49,7 +49,7 @@ function Header() {
                     variant='secondary'
                     size='icon'
                     className='rounded-full'>
-                    <Bell className='h-6 w-6 text-type' />
+                    <Bell className='h-6 w-6 text-dark' />
                     <span className='sr-only'>Toggle user menu</span>
                   </Button>
                 </DropdownMenuTrigger>
