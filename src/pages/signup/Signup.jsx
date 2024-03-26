@@ -15,11 +15,12 @@ function SignUp () {
     const [pin, setPin] = useState(new Array(6).fill(''));
     const [isRegister, setIsRegister] = useState(false)
     const [isCreatePin, setIsCreatePin] = useState(false)
+    const [message, setMessage] = useState(null)
 
     const api = useApi()
+    const alertElm = document.querySelector("#alert-error");
 
-    // const {isAuth} = useSelector((state) => state.users)
-    const isAuth = false
+    const {isAuth} = useSelector((state) => state.users)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -31,14 +32,28 @@ function SignUp () {
     const changeHanlder = (e) => {
         const data = { ...dataUser }
         data[e.target.name] = e.target.value
-        setForm(data)
+        setDataUser(data)
     }
 
     const createNewUser = (e) => {
         e.preventDefault();
 
-        setIsRegister(true)
-    
+        api({
+            method: 'POST',
+            url: '/users/create',
+            data: dataUser
+        })
+        .then((_) => {
+            setTimeout(() => {
+                setIsRegister(true)
+            }, 1500);
+            setMessage('Pendaftaran Berhasil')
+            alertElm.classList.add('opacity-100')
+        })
+        .catch((err) => {
+            setMessage(err.response.data.error)
+            alertElm.classList.add('opacity-100')
+        })
     }
 
     const handleInputPin = (element, index) => {
@@ -68,25 +83,39 @@ function SignUp () {
 
         console.log(pin.join(''))
 
-        alert(`Pin yang di input : ${pin.join('')}`)
-
-        // api({
-        //     method: 'POST',
-        //     url: '/users',
-        //     data: form
-        // })
-        //     .then((_) => {
-        //         setTimeout(() => {
-        //             navigate('/sign-in')
-        //         }, 1500);
-        //     })
-        //     .catch((err) => {
-        //         console.log(err)
-        //     })
+        api({
+            method: 'PATCH',
+            url: '/users/pin/add',
+            data: {pin : pin.join(''), email: dataUser.email}
+        })
+        .then((_) => {
+            setTimeout(() => {
+                navigate('/login')
+            }, 1500);
+            setMessage('Pin berhasil dibuat')
+            alertElm.classList.add('opacity-100')
+        })
+        .catch((err) => {
+            setMessage(err.response.data.error)
+            alertElm.classList.add('opacity-100')
+        })
     }
 
+    const closeAllert = () => {
+        alertElm.classList.remove('opacity-100')
+    }
+
+    //Menghilangkan alert secara otomatis
+    useEffect(() => {
+        if (message) {
+            setTimeout(() => {
+                alertElm.classList.remove('opacity-100');
+            }, 7000)
+        }
+    },[message])
+
     return (
-        <main className="flex flex-row w-screen overflow-y-hidden font-nunito">
+        <main className="flex flex-row w-screen overflow-x-hidden font-nunito">
             <section className='jumbotron w-full md:w-1/2 h-screen flex flex-col px-20 py-12 bg-primary/[0.2] md:bg-hero-side bg-cover bg-no-repeat overflow-y-hidden'>
                 <a className="self-center md:self-start text-primary md:text-white text-[29px] font-bold" href="/">Zwallet</a>
                 <div className="hidden md:block md:pl-16">
@@ -112,24 +141,24 @@ function SignUp () {
                             you are. Desktop, laptop, mobile phone? we cover all of that for you!
                         </p>
                         <p className="md:hidden w-[100%] text-center text-[#3A3D4299] text-base leading-loose">Create your account to access Zwallet.</p>
-                        <form className="md:w-[75%] flex flex-col gap-y-5" onSubmit={e => createNewUser(e)}>
+                        <form className="md:w-[75%] flex flex-col gap-y-5" onSubmit={(event) => createNewUser(event)}>
                             <div className="flex flex-row border-b-[1.5px] border-[#A9A9A999] py-2 mt-5">
                                 <div className="w-[12%] md:w-[8%]">
                                     <img src={iconPerson} alt="" />
                                 </div>
-                                <input className="w-[100%] outline-none"  type="text" name="username" required placeholder="Enter your username" />
+                                <input className="w-[100%] outline-none"  type="text" name="username" required placeholder="Enter your username" onChange={(event) => changeHanlder(event)}/>
                             </div>
                             <div className="flex flex-row border-b-[1.5px] border-[#A9A9A999] py-2 mt-5">
                                 <div className="w-[12%] md:w-[8%]">
                                     <img src={iconEmail} alt="" />
                                 </div>
-                                <input className="w-[100%] outline-none"  type="mail" name="email" required placeholder="Enter your e-mail" autoComplete="email" />
+                                <input className="w-[100%] outline-none"  type="mail" name="email" required placeholder="Enter your e-mail" autoComplete="email" onChange={(event) => changeHanlder(event)} />
                             </div>
                             <div className="flex flex-row border-b-[1.5px] border-[#A9A9A999] py-2 mt-5" >
                                 <div className="w-[12%] md:w-[8%]">
                                     <img src={iconLock} alt="" />
                                 </div>
-                                <input className="w-[100%] outline-none" type="password" name="password" id="" placeholder="Enter your password" />
+                                <input className="w-[100%] outline-none" type="password" name="password" id="" placeholder="Enter your password" onChange={(event) => changeHanlder(event)}/>
                                 <button type="button">
                                     <img src={iconEyeCrossed} alt="" />
                                 </button>
@@ -188,6 +217,12 @@ function SignUp () {
                         }
                     </div>
             }
+            <div id='alert-error' className='opacity-0  fixed top-0 left-0 w-screen h-screen flex flex-row justify-center items-center bg-[#000000CC] transition-all ease-in-out duration-1000 pointer-events-none'>
+                <div className='bg-white h-fit flex flex-col items-center justify-center gap-y-7 rounded-[2px] px-12 py-5'>
+                    <p className='font-bold text-blue-700 text-xl'>{message && message ? message : "Maaf terjadi kesalahan"}</p>
+                    <button id='btn-allert' className='bg-blue-700 text-white rounded-[2px] px-7 py-2 hover:bg-blue-900 pointer-events-auto' type='button' onClick={() => {closeAllert()}}>OK</button>
+                </div>
+            </div>
         </main>
     )
 }
