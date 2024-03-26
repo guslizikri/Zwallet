@@ -59,7 +59,7 @@ function NewSidebar() {
       id='default-sidebar'
       className='hidden md:block w-52 md:w-60 h-screen rounded-3xl drop-shadow-xl transition-transform -translate-x-full sm:translate-x-0'
       aria-label='Sidebar'>
-      <nav className='flex flex-col justify-between h-full max-h-[700px] py-6 rounded-2xl overflow-y-auto bg-white'>
+      <nav className='flex flex-col justify-between h-full max-h-[780px] py-6 rounded-2xl overflow-y-auto bg-white'>
         <ul className='space-y-2 font-medium'>
           {sidebarLinks.map((link, i) => (
             <SidebarLink key={i} {...link} />

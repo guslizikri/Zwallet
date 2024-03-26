@@ -25,6 +25,7 @@ import {
   InputOTPSlot,
 } from '../../component/parts/input-otp'
 import Layout from '../../component/templates/layout'
+
 const userDumy = {
   id: 1,
   frist_name: 'John',
@@ -33,6 +34,7 @@ const userDumy = {
   picture_url:
     'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
 }
+
 function ConfirmTransfer() {
   const navigate = useNavigate()
   const [value, setValue] = React.useState('')
@@ -42,7 +44,7 @@ function ConfirmTransfer() {
     console.log(value)
     setValue('')
 
-    navigate('/transfer/success')
+    navigate('/transfer/status')
   }
   return (
     <>
@@ -55,9 +57,15 @@ function ConfirmTransfer() {
             <UserLists data={userDumy} />
             <CardTitle className='text-lg font-bold'>Details</CardTitle>
             <DescriptionLists title='Amount' description='Rp100.000' />
-            <DescriptionLists title='Amount' description='Rp100.000' />
-            <DescriptionLists title='Amount' description='Rp100.000' />
-            <DescriptionLists title='Amount' description='Rp100.000' />
+            <DescriptionLists title='Balance Left' description='Rp20.000' />
+            <DescriptionLists
+              title='Date & Time'
+              description='May 11, 2020 - 12.20'
+            />
+            <DescriptionLists
+              title='Notes'
+              description='For buying some socks'
+            />
             <div className='w-full inline-flex justify-end '>
               <Dialog>
                 <DialogTrigger asChild>
