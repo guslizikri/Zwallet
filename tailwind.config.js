@@ -10,7 +10,8 @@ export default {
         error: '#FF5B37',
         success: '#1EC15F',
         background: '#FAFCFF',
-        type: '#3A3D42',
+        list: '#4D4B57',
+        listSecondary: '#7A7886',
       },
       backgroundImage: {},
       boxShadow: {
