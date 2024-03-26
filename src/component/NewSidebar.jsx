@@ -33,18 +33,19 @@ const sidebarLinks = [
 
 const SidebarLink = ({ title, icon, route }) => {
   const location = useLocation()
-  const isActive = location.pathname === route
+
+  const isActiveRoute = location.pathname.startsWith(route)
   return (
     <li>
       <Link
         to={route}
         className={`flex items-center py-2 text-gray-900  dark:text-white  dark:hover:bg-gray-700 group border-l-4 px-5 ${
-          isActive
+          isActiveRoute
             ? 'text-primary border-primary '
             : 'hover:border-primary border-transparent'
         }`}>
         {React.cloneElement(icon, {
-          color: isActive ? '#6379F4' : '',
+          color: isActiveRoute ? '#6379F4' : '',
         })}
         <span className='ms-3'>{title}</span>
       </Link>

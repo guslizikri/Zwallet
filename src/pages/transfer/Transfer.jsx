@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Searchinput from '../../component/elements/Search'
 import UserLists from '../../component/elements/UserLists'
 import {
@@ -64,7 +65,9 @@ function Transfer() {
           </CardHeader>
           <CardContent className='flex flex-col gap-5 px-[30px pb-5'>
             {avatarDumy.map((item) => (
-              <UserLists key={item.id} data={item} isLoading={loading} />
+              <Link key={item.id} to='/transfer/send'>
+                <UserLists data={item} isLoading={loading} />
+              </Link>
             ))}
           </CardContent>
         </Card>
