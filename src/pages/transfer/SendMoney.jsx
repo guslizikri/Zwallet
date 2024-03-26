@@ -1,8 +1,9 @@
 import { Pen } from 'lucide-react'
 import React, { useState } from 'react'
 import CurrencyInput from 'react-currency-input-field'
+import { Link } from 'react-router-dom'
 import UserLists from '../../component/elements/UserLists'
-import { Button } from '../../component/parts/button'
+import { buttonVariants } from '../../component/parts/button'
 import {
   Card,
   CardContent,
@@ -103,7 +104,15 @@ function SendMoney(props) {
                   </div>
 
                   <div className='w-full inline-flex justify-end mt-12'>
-                    <Button size='lg'>Continue</Button>
+                    <Link
+                      to='/transfer/confirm'
+                      className={buttonVariants({
+                        size: 'lg',
+                        className: 'rounded-xl',
+                      })}
+                      size='lg'>
+                      Continue
+                    </Link>
                   </div>
                 </div>
               </div>
