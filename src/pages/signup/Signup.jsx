@@ -1,4 +1,7 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import useApi from '../../utils/useApi'
 import imageGroup from '../../assets/images/Group 57.png'
 import iconEmail from '../../assets/icons/mail.svg'
 import iconLock from '../../assets/icons/lock.svg'
@@ -8,6 +11,80 @@ import iconPerson from '../../assets/icons/person.png'
 import '../../custom-css/login.css'
 
 function SignUp () {
+    const [dataUser, setDataUser] = useState({})
+    const [pin, setPin] = useState(new Array(6).fill(''));
+    const [isRegister, setIsRegister] = useState(false)
+    const [isCreatePin, setIsCreatePin] = useState(false)
+
+    const api = useApi()
+
+    // const {isAuth} = useSelector((state) => state.users)
+    const isAuth = false
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (isAuth) {
+            navigate('/')
+        }
+    }, [isAuth])
+
+    const changeHanlder = (e) => {
+        const data = { ...dataUser }
+        data[e.target.name] = e.target.value
+        setForm(data)
+    }
+
+    const createNewUser = (e) => {
+        e.preventDefault();
+
+        setIsRegister(true)
+    
+    }
+
+    const handleInputPin = (element, index) => {
+        if (isNaN(element.value)) return false;
+
+        setPin([...pin.map((d, idx) => (idx === index) ? element.value : d )])
+
+        //fokus otomatis input pin selanjutnya
+        if (element.nextSibling) {
+            element.nextElementSibling.focus();
+        }
+
+        const checkInputPin = pin.filter((p) => Boolean(p));
+        if ((checkInputPin.length + 1)  === 6){
+            document.querySelector('.btn-submit-pin').toggleAttribute('disabled')
+            document.querySelector('.btn-submit-pin').classList.replace('bg-[#6457570D]', 'bg-primary')
+            document.querySelector('.btn-submit-pin').classList.replace('text-[#DADADA]', 'text-white')
+        }else{
+            document.querySelector('.btn-submit-pin').setAttribute('disabled', true)
+            document.querySelector('.btn-submit-pin').classList.replace('bg-primary', 'bg-[#6457570D]')
+            document.querySelector('.btn-submit-pin').classList.replace('text-white', 'text-[#DADADA]')
+        }
+    }
+
+    const handleSubmitPin = (e) => {
+        e.preventDefault()
+
+        console.log(pin.join(''))
+
+        alert(`Pin yang di input : ${pin.join('')}`)
+
+        // api({
+        //     method: 'POST',
+        //     url: '/users',
+        //     data: form
+        // })
+        //     .then((_) => {
+        //         setTimeout(() => {
+        //             navigate('/sign-in')
+        //         }, 1500);
+        //     })
+        //     .catch((err) => {
+        //         console.log(err)
+        //     })
+    }
+
     return (
         <main className="flex flex-row w-screen overflow-y-hidden font-nunito">
             <section className='jumbotron w-full md:w-1/2 h-screen flex flex-col px-20 py-12 bg-primary/[0.2] md:bg-hero-side bg-cover bg-no-repeat overflow-y-hidden'>
@@ -22,43 +99,95 @@ function SignUp () {
                     users coverage.
                 </p>
             </section>
-            <section className="absolute top-[25%] md:static md:w-1/2 h-screen flex flex-col rounded-[20px] md:rounded-none gap-y-7 px-5 md:px-12 py-12 bg-white">
-                <h2 className="md:hidden self-center text-2xl font-bold text-[#3A3D42]">Sign Up</h2>
-                <h2 className="hidden md:flex w-[60%] text-2xl font-bold text-[#3A3D42] leading-normal">Start Accessing Banking Needs
-                    With All Devices and All Platforms
-                    With 30.000+ Users
-                </h2>
-                <p className="hidden md:flex w-[60%] text-[#3A3D4299] text-base leading-loose">
-                    Transfering money is eassier than ever, you can access Zwallet wherever 
-                    you are. Desktop, laptop, mobile phone? we cover all of that for you!
-                </p>
-                <p className="md:hidden w-[100%] text-center text-[#3A3D4299] text-base leading-loose">Create your account to access Zwallet.</p>
-                <form className="md:w-[75%] flex flex-col gap-y-5" action="">
-                    <div className="flex flex-row border-b-[1.5px] border-[#A9A9A999] py-2 mt-5">
-                        <div className="w-[12%] md:w-[8%]">
-                            <img src={iconPerson} alt="" />
-                        </div>
-                        <input className="w-[100%] outline-none"  type="mail" name="email" required placeholder="Enter your username" />
+            {
+                !isRegister ?
+                    <section className="absolute top-[25%] md:static md:w-1/2 h-screen flex flex-col rounded-[20px] md:rounded-none gap-y-7 px-5 md:px-12 py-12 bg-white">
+                        <h2 className="md:hidden self-center text-2xl font-bold text-[#3A3D42]">Sign Up</h2>
+                        <h2 className="hidden md:flex w-[60%] text-2xl font-bold text-[#3A3D42] leading-normal">Start Accessing Banking Needs
+                            With All Devices and All Platforms
+                            With 30.000+ Users
+                        </h2>
+                        <p className="hidden md:flex w-[60%] text-[#3A3D4299] text-base leading-loose">
+                            Transfering money is eassier than ever, you can access Zwallet wherever 
+                            you are. Desktop, laptop, mobile phone? we cover all of that for you!
+                        </p>
+                        <p className="md:hidden w-[100%] text-center text-[#3A3D4299] text-base leading-loose">Create your account to access Zwallet.</p>
+                        <form className="md:w-[75%] flex flex-col gap-y-5" onSubmit={e => createNewUser(e)}>
+                            <div className="flex flex-row border-b-[1.5px] border-[#A9A9A999] py-2 mt-5">
+                                <div className="w-[12%] md:w-[8%]">
+                                    <img src={iconPerson} alt="" />
+                                </div>
+                                <input className="w-[100%] outline-none"  type="text" name="username" required placeholder="Enter your username" />
+                            </div>
+                            <div className="flex flex-row border-b-[1.5px] border-[#A9A9A999] py-2 mt-5">
+                                <div className="w-[12%] md:w-[8%]">
+                                    <img src={iconEmail} alt="" />
+                                </div>
+                                <input className="w-[100%] outline-none"  type="mail" name="email" required placeholder="Enter your e-mail" autoComplete="email" />
+                            </div>
+                            <div className="flex flex-row border-b-[1.5px] border-[#A9A9A999] py-2 mt-5" >
+                                <div className="w-[12%] md:w-[8%]">
+                                    <img src={iconLock} alt="" />
+                                </div>
+                                <input className="w-[100%] outline-none" type="password" name="password" id="" placeholder="Enter your password" />
+                                <button type="button">
+                                    <img src={iconEyeCrossed} alt="" />
+                                </button>
+                            </div>
+                            <button className="bg-[#88888f3f] hover:bg-primary hover:text-white text-[#88888F] rounded-[8px] p-4 mt-10" type="submit">Sign Up</button>
+                            <span className="self-center mt-4">Already have an account? Let’s <a className="text-primary" href="">Login</a></span>
+                        </form>
+                    </section>
+                :
+                    <div className="create-pin absolute top-[25%] md:static md:w-1/2">
+                        {
+                            !isCreatePin ?  
+                                <section className=" h-screen flex flex-col rounded-[20px] md:rounded-none px-5 md:px-12 py-12 bg-white overflow-hidden">
+                                <h2 className="md:hidden self-center text-2xl font-bold text-[#3A3D42]">Create Security PIN</h2>
+                                <h2 className="hidden md:flex w-[60%] text-2xl font-bold text-[#3A3D42] leading-normal">
+                                    Secure Your Account, Your Wallet, and Your Data With 6 Digits PIN That You Created Yourself.
+                                </h2>
+                                <p className="hidden md:flex w-[60%] text-[#3A3D4299] text-base leading-loose">
+                                    Create 6 digits pin to secure all your money and your data in Zwallet app. Keep it secret and don’t tell 
+                                    anyone about your Zwallet account password and the PIN.
+                                </p>
+                                <p className="md:hidden w-[100%] text-center text-[#3A3D4299] text-base leading-loose">Create a PIN that’s contain 6 digits number for security purpose in Zwallet.</p>
+                                <form className="w-[100%] md:w-[75%] flex flex-col gap-y-16 overflow-x-hidden" onSubmit={e => handleSubmitPin(e)}>
+                                    <div className="flex flex-row justify-between gap-x-2 overflow-x-hidden">
+                                        {
+                                            pin.map((data, index) => {
+                                                return <input 
+                                                            className="md:w-[53px] md:h-[65px] w-[47px] h-[58px] text-center text-[#3A3D42] text-[30px] font-bold p-2 border border-[#A9A9A999] rounded-[10px] outline-none" 
+                                                            type="text" 
+                                                            maxLength={1} 
+                                                            inputMode="numeric" 
+                                                            autoComplete="off"
+                                                            key={index} 
+                                                            value={data}
+                                                            placeholder="_" 
+                                                            onChange={e => handleInputPin(e.target, index)}
+                                                            onFocus={e => e.target.select()}
+                                                            required
+                                                        />
+                                            })
+                                        }
+                                    </div>
+                                    <button className="btn-submit-pin bg-[#6457570D] text-[#DADADA] rounded-[10px] p-5 cursor-pointer hover:bg-blue-700" disabled type="submit">Confirm</button>
+                                </form>
+                                </section>
+                            :
+                                <section className=" h-screen flex flex-col rounded-[20px] md:rounded-none gap-y-7 px-5 md:px-12 md:py-20 bg-white overflow-hidden">   
+                                    <div className="md:w-[65%] flex flex-col text-center md:text-left gap-y-7 py-8 md:py-0">
+                                        <span className="w-fit self-center md:self-start text-white text-2xl font-bold bg-[#1EC15F] px-6 py-4 rounded-full rotate-12">&#10003;</span>
+                                        <h2 className="hidden md:block text-[#3A3D42] font-bold text-2xl mt-3">Your PIN Was Successfully Created</h2>
+                                        <h2 className="md:hidden text-[#3A3D42] font-bold text-2xl mt-3">PIN Successfully Created</h2>
+                                        <p className="text-[#3A3D4299] font-normal text-base">Your PIN was successfully created and you can now access all the features in Zwallet. Login to your new account and start exploring!</p>
+                                        <a className="bg-primary text-white text-center font-bold text-[18px] rounded-[12px] p-3 mt-10" href="/login">Login Now</a>
+                                    </div>
+                                </section>
+                        }
                     </div>
-                    <div className="flex flex-row border-b-[1.5px] border-[#A9A9A999] py-2 mt-5">
-                        <div className="w-[12%] md:w-[8%]">
-                            <img src={iconEmail} alt="" />
-                        </div>
-                        <input className="w-[100%] outline-none"  type="mail" name="email" required placeholder="Enter your e-mail" autoComplete="email" />
-                    </div>
-                    <div className="flex flex-row border-b-[1.5px] border-[#A9A9A999] py-2 mt-5" >
-                        <div className="w-[12%] md:w-[8%]">
-                            <img src={iconLock} alt="" />
-                        </div>
-                        <input className="w-[100%] outline-none" type="password" name="password" id="" placeholder="Enter your password" />
-                        <button type="button">
-                            <img src={iconEyeCrossed} alt="" />
-                        </button>
-                    </div>
-                    <button className="bg-[#88888f3f] hover:bg-primary hover:text-white text-[#88888F] rounded-[8px] p-4 mt-10" type="submit">Sign Up</button>
-                    <span className="self-center mt-4">Already have an account? Let’s <a className="text-primary" href="">Login</a></span>
-                </form>
-            </section>
+            }
         </main>
     )
 }

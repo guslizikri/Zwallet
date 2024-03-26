@@ -1,7 +1,11 @@
-const ary = new Array(6).fill(2)
+// const ary = new Array(6).fill(2)
 
-console.log(ary)
+// console.log(ary)
 
-const nan = isNaN('w')
+// const nan = isNaN('w')
 
-console.log(nan)
+// console.log(nan)
+
+const str = Boolean('hh')
+
+console.log(str)
