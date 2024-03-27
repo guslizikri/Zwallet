@@ -1,9 +1,10 @@
 import { Pen } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CurrencyInput from 'react-currency-input-field'
-import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
 import UserLists from '../../component/elements/UserLists'
-import { buttonVariants } from '../../component/parts/button'
+import { Button } from '../../component/parts/button'
 import {
   Card,
   CardContent,
@@ -12,26 +13,37 @@ import {
 } from '../../component/parts/card'
 import { Input } from '../../component/parts/input'
 import Layout from '../../component/templates/layout'
-
-const userDumy = {
-  id: 1,
-  frist_name: 'John',
-  last_name: 'Doe',
-  phone_number: '+62 813-8492-9994',
-  picture_url:
-    'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-}
+import { setTransferDetails } from '../../store/reducer/transfer'
+import useApi from '../../utils/useApi'
 
 function SendMoney(props) {
+  const { id } = useParams()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const [errorMessage, setErrorMessage] = useState('')
-  const [className, setClassName] = useState('')
-  const [rawValue, setRawValue] = useState('')
+  const [user, setUser] = useState('')
   const [isInputFocused, setIsInputFocused] = useState(false)
+  const [className, setClassName] = useState('')
+  const [amount, setAmount] = useState('')
+  const [notes, setNotes] = useState('')
+
+  const api = useApi()
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await api.get(`/user/${id}`)
+        setUser(response.data.user)
+      } catch (error) {
+        console.error('Error fetching user:', error)
+      }
+    }
+
+    fetchUser()
+  }, [])
 
   const validateValue = (value) => {
-    const rawValue = value === undefined ? 'undefined' : value
-    setRawValue(rawValue || ' ')
-
     if (!value) {
       setClassName('')
     } else if (Number.isNaN(Number(value))) {
@@ -39,6 +51,25 @@ function SendMoney(props) {
       setClassName('is-invalid')
     } else {
       setClassName('is-valid')
+    }
+    setAmount(value)
+  }
+
+  const handleInputChange = (e) => {
+    setNotes(e.target.value)
+  }
+
+  const handleClickSubmit = async (e) => {
+    e.preventDefault()
+    if (!amount || isNaN(amount)) {
+      setErrorMessage('Please enter a valid amount')
+      return
+    }
+    try {
+      await dispatch(setTransferDetails({ id, amount, notes }))
+      navigate(`/transfers/${id}/confirm`)
+    } catch (error) {
+      console.error('Error transferring money:', error)
     }
   }
 
@@ -49,6 +80,7 @@ function SendMoney(props) {
   const handleInputBlur = () => {
     setIsInputFocused(false)
   }
+
   return (
     <>
       <Layout>
@@ -57,7 +89,7 @@ function SendMoney(props) {
             <CardTitle className='text-lg font-bold'>Transfer Money</CardTitle>
           </CardHeader>
           <CardContent className='flex flex-col gap-10 px-[30px pb-5'>
-            <UserLists data={userDumy} />
+            <UserLists data={user} />
             <div className='w-full h-max flex flex-col gap-11 justify-between'>
               <div className='w-full'>
                 <p className='text-base text-listSecondary text-left w-1/2'>
@@ -79,6 +111,7 @@ function SendMoney(props) {
                       currency: 'IDR',
                     }}
                     step={10}
+                    value={amount}
                   />
                   <div className='invalid-feedback'>{errorMessage}</div>
 
@@ -97,22 +130,19 @@ function SendMoney(props) {
                       name={props.name}
                       placeholder='Add some notes'
                       className='pl-10 pr-4 py-3 h-full w-full items-center rounded-none text-base !text-dark font-semibold placeholder:text-dark/40 placeholder:font-normal border-0 border-b-[1.5px] border-b-dark/25 bg-transparent focus:border-b-primary focus:outline-none focus:ring-0'
-                      onChange={props.onInputChange}
+                      onChange={handleInputChange}
                       onFocus={handleInputFocus}
                       onBlur={handleInputBlur}
                     />
                   </div>
 
                   <div className='w-full inline-flex justify-end mt-12'>
-                    <Link
-                      to='/transfer/confirm'
-                      className={buttonVariants({
-                        size: 'lg',
-                        className: 'rounded-xl',
-                      })}
-                      size='lg'>
+                    <Button
+                      className='rounded-xl'
+                      size='lg'
+                      onClick={handleClickSubmit}>
                       Continue
-                    </Link>
+                    </Button>
                   </div>
                 </div>
               </div>

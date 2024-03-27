@@ -6,6 +6,7 @@ import ConfirmTransfer from '../pages/transfer/ConfirmTransfer.jsx'
 import SendMoney from '../pages/transfer/SendMoney.jsx'
 import Status from '../pages/transfer/Status.jsx'
 import Transfer from '../pages/transfer/Transfer.jsx'
+import PrivateRoute from '../privateRoute.js'
 
 export default createBrowserRouter([
   {
@@ -20,20 +21,58 @@ export default createBrowserRouter([
     path: '/profile',
     element: <Profile />,
   },
+  // for development purpos only
   {
-    path: '/transfer',
+    path: '/transfers',
     element: <Transfer />,
   },
   {
-    path: '/transfer/send',
+    path: '/transfers/:id/send',
     element: <SendMoney />,
   },
   {
-    path: '/transfer/confirm',
+    path: '/transfers/:id/confirm',
     element: <ConfirmTransfer />,
   },
   {
-    path: '/transfer/status',
+    path: '/transfers/:id/status',
     element: <Status />,
+  },
+  // for development purpos only
+
+  {
+    path: '/transfer',
+    element: (
+      <PrivateRoute>
+        <Transfer />
+      </PrivateRoute>
+    ),
+  },
+
+  {
+    path: '/transfer/:id/send',
+    element: (
+      <PrivateRoute>
+        <SendMoney />
+      </PrivateRoute>
+    ),
+  },
+
+  {
+    path: '/transfer/:id/confirm',
+    element: (
+      <PrivateRoute>
+        <ConfirmTransfer />
+      </PrivateRoute>
+    ),
+  },
+
+  {
+    path: '/transfer/:id/status',
+    element: (
+      <PrivateRoute>
+        <Status />
+      </PrivateRoute>
+    ),
   },
 ])

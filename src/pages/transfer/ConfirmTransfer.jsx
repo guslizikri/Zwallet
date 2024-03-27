@@ -1,6 +1,7 @@
 import { REGEXP_ONLY_DIGITS } from 'input-otp'
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
 import DescriptionLists from '../../component/elements/DescriptionList'
 import UserLists from '../../component/elements/UserLists'
 import { Button } from '../../component/parts/button'
@@ -25,26 +26,51 @@ import {
   InputOTPSlot,
 } from '../../component/parts/input-otp'
 import Layout from '../../component/templates/layout'
-
-const userDumy = {
-  id: 1,
-  frist_name: 'John',
-  last_name: 'Doe',
-  phone_number: '+62 813-8492-9994',
-  picture_url:
-    'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-}
+import useApi from '../../utils/useApi'
 
 function ConfirmTransfer() {
+  const { id } = useParams()
+  const profile = useSelector((state) => state.profile)
+  const transfer = useSelector((state) => state.transfer)
   const navigate = useNavigate()
-  const [value, setValue] = React.useState('')
 
-  const handleSubmitPin = (e) => {
+  const [value, setValue] = useState('')
+  const [user, setUser] = useState('')
+
+  const api = useApi()
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await api.get(`/user/${id}`)
+        setUser(response.data.user)
+      } catch (error) {
+        console.error('Error fetching user:', error)
+      }
+    }
+
+    fetchUser()
+  }, [])
+
+  const handleSubmitPin = async (e) => {
     e.preventDefault()
-    console.log(value)
-    setValue('')
 
-    navigate('/transfer/status')
+    if (value !== profile.pin) {
+      console.error('Incorrect PIN')
+      return
+    }
+    try {
+      const response = await api.post(`/transaction/send/${id}`, {
+        amount: transfer.amount,
+        notes: transfer.notes,
+      })
+
+      console.log('Transfer successful:', response.data)
+      setValue('')
+      navigate(`/transfers/${id}/status`)
+    } catch (error) {
+      console.error('Error while sending transfer:', error)
+    }
   }
   return (
     <>
@@ -54,18 +80,18 @@ function ConfirmTransfer() {
             <CardTitle className='text-lg font-bold'>Transfer To</CardTitle>
           </CardHeader>
           <CardContent className='flex flex-col gap-5 px-[30px pb-5'>
-            <UserLists data={userDumy} />
+            <UserLists data={user} />
             <CardTitle className='text-lg font-bold'>Details</CardTitle>
-            <DescriptionLists title='Amount' description='Rp100.000' />
-            <DescriptionLists title='Balance Left' description='Rp20.000' />
+            <DescriptionLists title='Amount' description={transfer.amount} />
+            <DescriptionLists
+              title='Balance Left'
+              description={profile.balance - transfer.amount}
+            />
             <DescriptionLists
               title='Date & Time'
               description='May 11, 2020 - 12.20'
             />
-            <DescriptionLists
-              title='Notes'
-              description='For buying some socks'
-            />
+            <DescriptionLists title='Notes' description={transfer.notes} />
             <div className='w-full inline-flex justify-end '>
               <Dialog>
                 <DialogTrigger asChild>
@@ -105,14 +131,6 @@ function ConfirmTransfer() {
                       <InputOTPSlot
                         className='!rounded-md w-14 h-16 text-center text-[30px] font-bold !border'
                         index={3}
-                      />
-                      <InputOTPSlot
-                        className='!rounded-md w-14 h-16 text-center text-[30px] font-bold !border'
-                        index={4}
-                      />
-                      <InputOTPSlot
-                        className='!rounded-md w-14 h-16 text-center text-[30px] font-bold !border'
-                        index={5}
                       />
                     </InputOTPGroup>
                   </InputOTP>

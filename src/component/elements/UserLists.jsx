@@ -13,13 +13,13 @@ function UserLists({ data, balance, isLoading }) {
       <Card className='bg-white flex w-full border-none shadow'>
         <CardHeader className='p-5'>
           <Avatar className='h-[70px] w-[70px] flex rounded-md'>
-            <AvatarImage src={data.picture_url} alt='Avatar' />
+            <AvatarImage src={data.image} alt='Avatar' />
           </Avatar>
         </CardHeader>
         <ContentCard className='flex justify-between p-6 pl-0 items-center w-full'>
           <div className='flex flex-col gap-3'>
             <CardTitle className='text-base text-list font-bold'>
-              {data.frist_name} {data.last_name}
+              {data.username}
             </CardTitle>
             <CardDescription className='text-listSecondary'>
               {data.phone_number}

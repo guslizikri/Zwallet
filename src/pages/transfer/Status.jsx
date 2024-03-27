@@ -1,6 +1,7 @@
 import { Download, Share2 } from 'lucide-react'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Link, useParams } from 'react-router-dom'
 import DescriptionLists from '../../component/elements/DescriptionList'
 import UserLists from '../../component/elements/UserLists'
 import { Button, buttonVariants } from '../../component/parts/button'
@@ -12,6 +13,7 @@ import {
   CardTitle,
 } from '../../component/parts/card'
 import Layout from '../../component/templates/layout'
+import useApi from '../../utils/useApi'
 
 const userDumy = {
   id: 1,
@@ -23,13 +25,35 @@ const userDumy = {
 }
 
 function Status(props) {
+  const { id } = useParams()
+  const api = useApi()
+
+  const profile = useSelector((state) => state.profile)
+  const transfer = useSelector((state) => state.transfer)
+
+  const [user, setUser] = useState('')
+
+  const { success = true } = props
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await api.get(`/user/${id}`)
+        setUser(response.data.user)
+      } catch (error) {
+        console.error('Error fetching user:', error)
+      }
+    }
+
+    fetchUser()
+  }, [])
   return (
     <>
       <Layout>
         <Card className='bg-white border-none drop-shadow-md'>
           <CardHeader className='gap-6 p-[30px]'>
             <div className='flex flex-col items-center gap-5'>
-              {props.success ? (
+              {success ? (
                 <>
                   <svg
                     width='70'
@@ -88,18 +112,18 @@ function Status(props) {
             </div>
           </CardHeader>
           <CardContent className='flex flex-col gap-5 px-[30px pb-5'>
-            <DescriptionLists title='Amount' description='Rp100.000' />
-            <DescriptionLists title='Balance Left' description='Rp20.000' />
+            <DescriptionLists title='Amount' description={transfer.amount} />
+            <DescriptionLists
+              title='Balance Left'
+              description={profile.balance - transfer.amount}
+            />
             <DescriptionLists
               title='Date & Time'
               description='May 11, 2020 - 12.20'
             />
-            <DescriptionLists
-              title='Notes'
-              description='For buying some socks'
-            />
+            <DescriptionLists title='Notes' description={transfer.notes} />
             <CardTitle className='text-lg font-bold'>Transfer To</CardTitle>
-            <UserLists data={userDumy} />
+            <UserLists data={user} />
 
             <div className='w-full inline-flex justify-end gap-4'>
               <Button className='rounded-xl font-semibold bg-primary/35 hover:bg-primary/50 text-primary gap-3 w-14 h-auto p-0'>

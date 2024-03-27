@@ -1,5 +1,6 @@
 import { Bell } from 'lucide-react'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Avatar, AvatarFallback, AvatarImage } from './parts/avatar'
 import { Button } from './parts/button'
 import {
@@ -12,6 +13,8 @@ import {
 } from './parts/dropdownMenu'
 
 function Header() {
+  const profile = useSelector((state) => state.profile)
+
   const [showBellNotif, setShowBellNotif] = useState(false)
   const showBellNotifHandler = (e) => {
     e.preventDefault()
@@ -27,20 +30,15 @@ function Header() {
           <div className='flex gap-2 items-center justify-between w-full sm:w-fit px-2'>
             <div className='flex items-center gap-4'>
               <Avatar className='h-12 w-12 flex rounded-md'>
-                <AvatarImage
-                  src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-                  alt='Avatar'
-                />
+                <AvatarImage src={profile.image} alt={profile.username} />
                 <AvatarFallback>JL</AvatarFallback>
               </Avatar>
               <div className='grid gap-1 *:text-dark '>
                 <span className='sm:hidden text-[#3A3D42E5]'>Hello,</span>
                 <p className='text-lg  font-bold leading-none'>
-                  Robert Chandler
+                  {profile.email}
                 </p>
-                <p className='text-[13px] hidden sm:block'>
-                  +62 8139 3877 7946
-                </p>
+                <p className='text-[13px] hidden sm:block'>{profile.phone}</p>
               </div>
 
               <DropdownMenu>
