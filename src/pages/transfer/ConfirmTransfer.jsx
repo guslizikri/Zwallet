@@ -36,6 +36,7 @@ function ConfirmTransfer() {
 
   const [value, setValue] = useState('')
   const [user, setUser] = useState('')
+  const [isPinValid, setIsPinValid] = useState(true)
 
   const api = useApi()
 
@@ -55,11 +56,16 @@ function ConfirmTransfer() {
   const handleSubmitPin = async (e) => {
     e.preventDefault()
 
-    if (value !== profile.pin) {
-      console.error('Incorrect PIN')
-      return
-    }
     try {
+      const checkpin = await api.post(`/user/checkpin`, {
+        pin: value,
+      })
+
+      if (checkpin.data.description !== 'OK') {
+        throw new Error(checkpin.data.message)
+      }
+      setIsPinValid(true)
+
       const response = await api.post(`/transaction/send/${id}`, {
         amount: transfer.amount,
         notes: transfer.notes,
@@ -69,13 +75,14 @@ function ConfirmTransfer() {
       setValue('')
       navigate(`/transfers/${id}/status`)
     } catch (error) {
+      setIsPinValid(false)
       console.error('Error while sending transfer:', error)
     }
   }
   return (
     <>
       <Layout>
-        <Card className='bg-white border-none drop-shadow-md'>
+        <Card className='bg-white border-none drop-shadow-md rounded-3xl'>
           <CardHeader className='gap-6 p-[30px]'>
             <CardTitle className='text-lg font-bold'>Transfer To</CardTitle>
           </CardHeader>
@@ -117,19 +124,26 @@ function ConfirmTransfer() {
                     onChange={(value) => setValue(value)}>
                     <InputOTPGroup className='gap-6 justify-center w-full rounded-md'>
                       <InputOTPSlot
-                        className='!rounded-md w-14 h-16 text-center text-[30px] font-bold !border'
+                        className={`${
+                          isPinValid ? 'border-list ' : 'border-error '
+                        }!rounded-md w-14 h-16 text-center text-[30px] font-bold !border`}
                         index={0}
                       />
                       <InputOTPSlot
-                        className='!rounded-md w-14 h-16 text-center text-[30px] font-bold !border'
-                        index={1}
+                        className={`${
+                          isPinValid ? 'border-list ' : 'border-error '
+                        }!rounded-md w-14 h-16 text-center text-[30px] font-bold !border`}
                       />
                       <InputOTPSlot
-                        className='!rounded-md w-14 h-16 text-center text-[30px] font-bold !border'
+                        className={`${
+                          isPinValid ? 'border-list ' : 'border-error '
+                        }!rounded-md w-14 h-16 text-center text-[30px] font-bold !border`}
                         index={2}
                       />
                       <InputOTPSlot
-                        className='!rounded-md w-14 h-16 text-center text-[30px] font-bold !border'
+                        className={`${
+                          isPinValid ? 'border-list ' : 'border-error '
+                        }!rounded-md w-14 h-16 text-center text-[30px] font-bold !border`}
                         index={3}
                       />
                     </InputOTPGroup>

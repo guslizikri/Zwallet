@@ -17,7 +17,7 @@ const sidebarLinks = [
   {
     title: 'Transfer',
     icon: <ArrowUpIcon className=' h-7' />,
-    route: '/transfer',
+    route: '/transfers',
   },
   {
     title: 'Top Up',

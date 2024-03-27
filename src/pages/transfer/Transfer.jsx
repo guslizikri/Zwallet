@@ -99,7 +99,7 @@ function Transfer() {
   return (
     <>
       <Layout>
-        <Card className='bg-white border-none drop-shadow-md'>
+        <Card className='bg-white border-none drop-shadow-md rounded-3xl'>
           <CardHeader className='gap-6 p-[30px]'>
             <CardTitle className='text-lg font-bold'>Search Receiver</CardTitle>
             <Searchinput onInputChange={handleInputChange} name='Search' />

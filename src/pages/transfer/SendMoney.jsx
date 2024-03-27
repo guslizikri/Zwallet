@@ -1,7 +1,7 @@
 import { Pen } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import CurrencyInput from 'react-currency-input-field'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import UserLists from '../../component/elements/UserLists'
 import { Button } from '../../component/parts/button'
@@ -20,6 +20,7 @@ function SendMoney(props) {
   const { id } = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const profile = useSelector((state) => state.profile)
 
   const [errorMessage, setErrorMessage] = useState('')
   const [user, setUser] = useState('')
@@ -84,7 +85,7 @@ function SendMoney(props) {
   return (
     <>
       <Layout>
-        <Card className='bg-white border-none drop-shadow-md'>
+        <Card className='bg-white border-none drop-shadow-md rounded-3xl'>
           <CardHeader className='gap-6 p-[30px]'>
             <CardTitle className='text-lg font-bold'>Transfer Money</CardTitle>
           </CardHeader>
@@ -116,7 +117,7 @@ function SendMoney(props) {
                   <div className='invalid-feedback'>{errorMessage}</div>
 
                   <p className='text-base text-dark text-center font-bold'>
-                    Rp120.000 Available
+                    Rp{profile.balance} Available
                   </p>
 
                   <div className='relative mt-8 mx-auto w-[40%] *:text-[#A9A9A9] focus:*:text-primary'>

@@ -50,7 +50,7 @@ function Status(props) {
   return (
     <>
       <Layout>
-        <Card className='bg-white border-none drop-shadow-md'>
+        <Card className='bg-white border-none drop-shadow-md rounded-3xl'>
           <CardHeader className='gap-6 p-[30px]'>
             <div className='flex flex-col items-center gap-5'>
               {success ? (
