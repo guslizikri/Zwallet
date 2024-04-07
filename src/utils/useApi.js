@@ -7,7 +7,6 @@ function useApi(urls = '') {
 
   const [requests, setRequests] = useState({
     baseURL: import.meta.env.VITE_APP_BASEURL || urls,
-    // baseURL: import.meta.env.VITE_APP_BASEURL || urls,
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,

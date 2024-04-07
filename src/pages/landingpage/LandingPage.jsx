@@ -16,9 +16,18 @@ import sherina from '../../assets/sherina.svg';
 import jessica from '../../assets/jessica.svg';
 import robert from '../../assets/robert.svg';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 
 function LandingPage() {
+  const { isAuth } = useSelector((s) => s.users);
   const navigate = useNavigate();
+  useEffect(() => {
+    if (isAuth) {
+      navigate('/home');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuth]);
   const advantages = [
     {
       image: support,

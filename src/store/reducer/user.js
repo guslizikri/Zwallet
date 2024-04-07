@@ -4,7 +4,7 @@ const userSlice = createSlice({
   name: 'users',
   initialState: {
     isAuth: false,
-    token:'',
+    token: '',
   },
   reducers: {
     login(state, actions) {

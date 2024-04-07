@@ -19,12 +19,14 @@ import { jwtDecode } from 'jwt-decode';
 import { Bar } from 'react-chartjs-2';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import NewSidebar from '../../component/NewSidebar.jsx';
 import { getProfile } from '../../store/reducer/profile.js';
 import useApi from '../../utils/useApi.js';
 
 function Home() {
   const navigate = useNavigate();
+  const { profile } = useSelector((s) => s.profile);
 
   const { token } = useSelector((s) => s.users);
 
@@ -260,6 +262,18 @@ function Home() {
         <section className="container flex justify-center my-10">
           {/* <Sidebar /> */}
           <NewSidebar />
+          {profile.phone ? (
+            ''
+          ) : (
+            <div className="w-full h-full py-4 flex justify-center items-center">
+              <Link
+                className="font-bold text-blue-400 text-4xl underline italic "
+                to={'/profile/add-phone'}
+              >
+                Add your phone first
+              </Link>
+            </div>
+          )}
         </section>
         <Footer />
       </div>
@@ -270,7 +284,7 @@ function Home() {
     <div className="bg-[#fafcff] font-nunito">
       <Header />
       <section className="container flex justify-center my-10">
-        <Sidebar />
+        <NewSidebar />
         <main>
           <div className="w-[343px] min-[900px]:w-[700px] min-[1150px]:w-[850px] ml-4 lg:ml-5">
             <div
@@ -300,16 +314,18 @@ function Home() {
                     Balance
                   </div>
                   <div className="text-2xl min-[900px]:text-[40px] text-white leading-[33px] min-[900px]:leading-[55px] font-bold mt-[10px] mb-[15px]">
-                    {balance.length >= 2 &&
-                    typeof balance[0].total === 'string' &&
-                    typeof balance[1].total === 'string'
-                      ? `Rp${parseInt(
-                          balance[0].total - balance[1].total
-                        ).toLocaleString('id-ID')}`
-                      : 'Balance data not available'}
+                    {profile.balance ? (
+                      <p>Rp{profile.balance.toLocaleString('id-ID')}</p>
+                    ) : (
+                      <p>Balance data not available</p>
+                    )}
                   </div>
                   <div className="text-sm text-[#DFDCDC] leading-[19px] font-semibold">
-                    {phone_number}
+                    {profile.phone ? (
+                      <p>{profile.phone}</p>
+                    ) : (
+                      <p>Add Your Phone</p>
+                    )}
                   </div>
                 </div>
 
@@ -321,6 +337,7 @@ function Home() {
                         ? 'bg-white bg-opacity-[20%] text-white'
                         : 'bg-[#EAEDFF] text-[#514F5B]'
                     } rounded-[10px] border-[1px] border-white border-solid mb-4`}
+                    onClick={() => navigate('/transfers')}
                   >
                     <img
                       src={

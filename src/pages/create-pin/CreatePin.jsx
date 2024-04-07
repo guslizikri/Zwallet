@@ -28,7 +28,7 @@ function CreatePin() {
   };
 
   return (
-    <main className="flex flex-row w-screen overflow-y-hidden font-nunito overflow-x-hidden">
+    <main className="container flex flex-row w-screen overflow-y-hidden font-nunito overflow-x-hidden">
       <section className="jumbotron w-full md:w-1/2 h-screen flex flex-col px-20 py-12 bg-primary/[0.2] md:bg-hero-side bg-cover bg-no-repeat overflow-y-hidden">
         <a
           className="self-center md:self-start text-primary md:text-white text-[29px] font-bold"

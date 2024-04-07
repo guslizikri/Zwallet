@@ -1,4 +1,6 @@
 import React from 'react';
+import { logout } from '../store/reducer/user';
+import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import {
   ArrowUpIcon,
@@ -55,10 +57,12 @@ const SidebarLink = ({ title, icon, route }) => {
 };
 
 function NewSidebar() {
+  const dispatch = useDispatch();
+
   return (
     <aside
       id="default-sidebar"
-      className="hidden md:block w-52 md:w-60 h-screen rounded-3xl drop-shadow-xl transition-transform -translate-x-full sm:translate-x-0"
+      className="hidden lg:block w-52 md:w-[270px] min-h-[90vh] rounded-2xl transition-transform -translate-x-full sm:translate-x-0"
       aria-label="Sidebar"
     >
       <nav className="flex flex-col justify-between h-full max-h-[780px] py-6 rounded-2xl overflow-y-auto bg-white">
@@ -69,6 +73,10 @@ function NewSidebar() {
         </ul>
         <a
           href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch(logout());
+          }}
           className="flex items-center py-2 px-6 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
         >
           <LogoutIcon className="w-7 h-7" />

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 import Header from '../../component/Header';
-import Sidebar from '../../component/Sidebar';
+import Sidebar from '../../component/NewSidebar';
 import Card from '../../component/CardProfile';
 import MainHeader from '../../component/ProfileHead';
 import { useSelector } from 'react-redux';
-import defaultProfile from '../../assets/profile-default.png';
 import { useNavigate, Link } from 'react-router-dom';
 
 function Home() {

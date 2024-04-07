@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react';
 import useApi from '../../utils/useApi';
 import { Link } from 'react-router-dom';
 import Header from '../../component/Header';
-import Sidebar from '../../component/Sidebar';
+import Sidebar from '../../component/NewSidebar';
 import MainHeader from '../../component/ProfileHead';
 
 function Manage() {
