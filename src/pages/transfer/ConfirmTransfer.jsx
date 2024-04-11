@@ -134,6 +134,7 @@ function ConfirmTransfer() {
                         className={`${
                           isPinValid ? 'border-list ' : 'border-error '
                         }!rounded-md w-14 h-16 text-center text-[30px] font-bold !border`}
+                        index={1}
                       />
                       <InputOTPSlot
                         className={`${
@@ -146,6 +147,18 @@ function ConfirmTransfer() {
                           isPinValid ? 'border-list ' : 'border-error '
                         }!rounded-md w-14 h-16 text-center text-[30px] font-bold !border`}
                         index={3}
+                      />
+                      <InputOTPSlot
+                        className={`${
+                          isPinValid ? 'border-list ' : 'border-error '
+                        }!rounded-md w-14 h-16 text-center text-[30px] font-bold !border`}
+                        index={4}
+                      />
+                      <InputOTPSlot
+                        className={`${
+                          isPinValid ? 'border-list ' : 'border-error '
+                        }!rounded-md w-14 h-16 text-center text-[30px] font-bold !border`}
+                        index={5}
                       />
                     </InputOTPGroup>
                   </InputOTP>
