@@ -1,3 +1,4 @@
+import defaultProfile from '../../assets/profile-default.png';
 import { Avatar, AvatarImage } from '../parts/avatar';
 import {
   Card,
@@ -13,7 +14,7 @@ function UserLists({ data, balance, isLoading }) {
       <Card className="bg-white flex w-full border-none shadow">
         <CardHeader className="p-5">
           <Avatar className="h-[70px] w-[70px] flex rounded-md">
-            <AvatarImage src={data.image} alt="Avatar" />
+            <AvatarImage src={data.image || defaultProfile} alt="Avatar" />
           </Avatar>
         </CardHeader>
         <ContentCard className="flex justify-between p-6 pl-0 items-center w-full">

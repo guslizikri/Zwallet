@@ -68,7 +68,7 @@ function Login() {
   }, [message]);
 
   return (
-    <main className="container flex flex-row w-screen overflow-y-hidden font-nunito">
+    <main className="flex justify-center flex-row w-screen overflow-y-hidden font-nunito">
       <section className="jumbotron w-full md:w-1/2 h-screen flex flex-col px-20 py-12 bg-primary/[0.2] md:bg-hero-side bg-cover bg-no-repeat overflow-y-hidden">
         <a
           className="self-center md:self-start text-primary md:text-white text-[29px] font-bold"
@@ -93,7 +93,7 @@ function Login() {
           coverage.
         </p>
       </section>
-      <section className="absolute top-[25%] md:static md:w-1/2 h-screen flex flex-col rounded-[20px] md:rounded-none gap-y-7 px-5 md:px-12 py-12 bg-white">
+      <section className="absolute top-[25%] w-[90%] md:static md:w-1/2 h-screen flex flex-col rounded-[20px] md:rounded-none gap-y-7 px-5 md:px-12 py-12 bg-white">
         <h2 className="md:hidden self-center text-2xl font-bold text-[#3A3D42]">
           Login
         </h2>
