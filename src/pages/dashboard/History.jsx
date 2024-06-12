@@ -16,10 +16,13 @@ import { jwtDecode } from 'jwt-decode';
 import useApi from '../../utils/useApi.js';
 import 'rsuite/dist/rsuite.min.css';
 
+import { useDispatch, useSelector } from 'react-redux';
+
 const HistoryPage = () => {
   const navigate = useNavigate();
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzExNTAyODk5LCJleHAiOjE3MTE1ODkyOTl9.OFOnVYxaZp2idya1-1hC7BxsO7BS0pBMI-FipJUUJGA';
+
+  const { token } = useSelector((s) => s.users);
+
   const { id } = jwtDecode(token);
   const api = useApi();
 

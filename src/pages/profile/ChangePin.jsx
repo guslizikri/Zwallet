@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 import MainHeader from '../../component/ProfileHead';
-import Card from '../../component/CardProfile';
 import useApi from '../../utils/useApi';
 // import { useSelector } from "react-redux";
 import Header from '../../component/Header';
-import Sidebar from '../../component/Sidebar';
+import Sidebar from '../../component/NewSidebar';
 import { useNavigate } from 'react-router-dom';
 
 export default function ChangePass() {

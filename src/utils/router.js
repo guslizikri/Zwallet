@@ -27,47 +27,75 @@ export default createBrowserRouter([
 
   {
     path: '/home',
-    element: <Home />,
+    element: (
+      <PrivateRoute>
+        <Home />
+      </PrivateRoute>
+    ),
   },
   {
     path: '/history',
-    element: <History />,
+    element: (
+      <PrivateRoute>
+        <History />
+      </PrivateRoute>
+    ),
   },
   {
     path: '/topup',
-    element: <Topup />,
-  },
-  {
-    path: '/history',
-    element: <History />,
-  },
-  {
-    path: '/topup',
-    element: <Topup />,
+    element: (
+      <PrivateRoute>
+        <Topup />
+      </PrivateRoute>
+    ),
   },
   {
     path: '/profile',
-    element: <Profile />,
+    element: (
+      <PrivateRoute>
+        <Profile />
+      </PrivateRoute>
+    ),
   },
   {
     path: '/profile/detail',
-    element: <Detail />,
+    element: (
+      <PrivateRoute>
+        <Detail />
+      </PrivateRoute>
+    ),
   },
   {
     path: '/profile/change-pin',
-    element: <ChangePin />,
+    element: (
+      <PrivateRoute>
+        <ChangePin />
+      </PrivateRoute>
+    ),
   },
   {
     path: '/profile/change-pass',
-    element: <ChangePass />,
+    element: (
+      <PrivateRoute>
+        <ChangePass />
+      </PrivateRoute>
+    ),
   },
   {
     path: '/profile/add-phone',
-    element: <AddPhone />,
+    element: (
+      <PrivateRoute>
+        <AddPhone />
+      </PrivateRoute>
+    ),
   },
   {
     path: '/profile/manage-phone',
-    element: <ManagePhone />,
+    element: (
+      <PrivateRoute>
+        <ManagePhone />
+      </PrivateRoute>
+    ),
   },
   {
     path: '/login',
@@ -85,27 +113,9 @@ export default createBrowserRouter([
     path: '/create-pin',
     element: <CreatePin />,
   },
-  // for development purpos only
-  {
-    path: '/transfers',
-    element: <Transfer />,
-  },
-  {
-    path: '/transfers/:id/send',
-    element: <SendMoney />,
-  },
-  {
-    path: '/transfers/:id/confirm',
-    element: <ConfirmTransfer />,
-  },
-  {
-    path: '/transfers/:id/status',
-    element: <Status />,
-  },
-  // for development purpos only
 
   {
-    path: '/transfer',
+    path: '/transfers',
     element: (
       <PrivateRoute>
         <Transfer />
@@ -114,7 +124,7 @@ export default createBrowserRouter([
   },
 
   {
-    path: '/transfer/:id/send',
+    path: '/transfers/:id/send',
     element: (
       <PrivateRoute>
         <SendMoney />
@@ -123,7 +133,7 @@ export default createBrowserRouter([
   },
 
   {
-    path: '/transfer/:id/confirm',
+    path: '/transfers/:id/confirm',
     element: (
       <PrivateRoute>
         <ConfirmTransfer />
@@ -132,7 +142,7 @@ export default createBrowserRouter([
   },
 
   {
-    path: '/transfer/:id/status',
+    path: '/transfers/:id/status',
     element: (
       <PrivateRoute>
         <Status />

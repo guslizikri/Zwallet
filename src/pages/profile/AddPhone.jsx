@@ -6,7 +6,7 @@ import Card from '../../component/CardProfile';
 
 // import { useSelector } from "react-redux";
 import Header from '../../component/Header';
-import Sidebar from '../../component/Sidebar';
+import Sidebar from '../../component/NewSidebar';
 import Input from '../../component/Input';
 import Button from '../../component/Button';
 

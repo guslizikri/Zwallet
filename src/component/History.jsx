@@ -1,3 +1,5 @@
+import defaultProfile from '../assets/profile-default.png';
+
 const History = ({
   user_id,
   sender_id,
@@ -12,7 +14,11 @@ const History = ({
     <div className="w-full h-[96px] flex justify-between items-center">
       <div className="flex">
         <img
-          src={user_id === sender_id ? receiver_image : sender_image}
+          src={
+            user_id === sender_id
+              ? receiver_image || defaultProfile
+              : sender_image || defaultProfile
+          }
           alt="photo profile"
           className="size-[56px] rounded-[12px]"
         />

@@ -5,13 +5,18 @@ import { Link } from 'react-router-dom';
 import defaultProfile from '../../assets/profile-default.png';
 import Header from '../../component/Header';
 import ListProfile from '../../component/ListProfile';
-import Sidebar from '../../component/Sidebar';
+import Sidebar from '../../component/NewSidebar';
 import useApi from '../../utils/useApi';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../store/reducer/user';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const api = useApi();
-  const { profile } = useSelector((s) => s.profile);
+  const Navigate = useNavigate();
 
+  const { profile } = useSelector((s) => s.profile);
+  const dispatch = useDispatch();
   // start update image
 
   const [userDataImage, setUserDataImage] = useState(null);
@@ -30,8 +35,7 @@ function Home() {
     })
       .then((res) => {
         alert(res.data.message);
-
-        window.location.reload();
+        Navigate('/home');
       })
       .catch((err) => {
         alert(err.message);
@@ -103,7 +107,15 @@ function Home() {
               <ListProfile content={'Personal Information'} />
               <ListProfile content={'Change Password'} />
               <ListProfile content={'Change PIN'} />
-              <ListProfile content={'Logout'} />
+              <button
+                className="text-list font-semibold bg-[#E5E8ED] flex justify-between items-center py-5 px-5 rounded-lg w-[312px]  sm:w-[433px]"
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch(logout());
+                }}
+              >
+                <p>Logout</p>
+              </button>
             </div>
           </div>
         </main>
