@@ -90,8 +90,8 @@ function ResetPassword() {
   }, [message]);
 
   return (
-    <main className="container flex flex-row w-screen overflow-y-hidden font-nunito">
-      <section className="jumbotron w-full md:w-1/2 h-screen flex flex-col px-20 py-12 bg-primary/[0.2] md:bg-hero-side bg-cover bg-no-repeat overflow-y-hidden">
+    <main className="justify-center flex flex-row w-screen overflow-y-hidden font-nunito">
+      <section className="jumbotron w-full md:w-1/2 h-screen flex flex-col px-20 py-16 bg-primary/[0.2] md:bg-hero-side bg-cover bg-no-repeat overflow-y-hidden">
         <a
           className="self-center md:self-start text-primary md:text-white text-[29px] font-bold"
           href="/"
@@ -115,7 +115,7 @@ function ResetPassword() {
           coverage.
         </p>
       </section>
-      <section className="absolute top-[25%] md:static md:w-1/2 h-screen flex flex-col rounded-[20px] md:rounded-none gap-y-7 px-5 md:px-12 py-12 bg-white">
+      <section className="absolute top-[25%] w-[90%] md:static md:w-1/2 h-screen flex flex-col rounded-[20px] md:rounded-none gap-y-10 px-5 md:px-12 py-16 bg-white">
         <h2 className="md:hidden self-center text-2xl font-bold text-[#3A3D42]">
           Reset Password
         </h2>
@@ -125,7 +125,7 @@ function ResetPassword() {
         </h2>
         {!checkEmail ? (
           <form
-            className="md:w-[75%] flex flex-col gap-y-5"
+            className="md:w-[95%] flex flex-col gap-y-9"
             onSubmit={(event) => {
               handleCheckEmail(event);
             }}

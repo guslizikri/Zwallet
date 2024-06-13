@@ -166,7 +166,7 @@ function SignUp() {
             Create your account to access Zwallet.
           </p>
           <form
-            className="md:w-full flex flex-col gap-y-5"
+            className="w-full md:w-[95%] flex flex-col gap-y-5"
             onSubmit={(event) => createNewUser(event)}
           >
             <div className="flex flex-row border-b-[1.5px] border-[#A9A9A999] py-2 mt-5">
