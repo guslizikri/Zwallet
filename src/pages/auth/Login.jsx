@@ -110,7 +110,7 @@ function Login() {
           Login to your existing account to access all the features in Zwallet.
         </p>
         <form
-          className="md:w-[75%] flex flex-col gap-y-5"
+          className="w-full md:w-[95%] flex flex-col gap-y-5"
           onSubmit={(event) => {
             submitHandler(event);
           }}
