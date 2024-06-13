@@ -124,7 +124,7 @@ function SignUp() {
 
   return (
     <main className="flex justify-center flex-row w-screen overflow-x-hidden font-nunito">
-      <section className="jumbotron w-full md:w-1/2 h-screen flex flex-col px-20 py-12 bg-primary/[0.2] md:bg-hero-side bg-cover bg-no-repeat overflow-y-hidden">
+      <section className="jumbotron w-full md:w-1/2 h-full min-h-screen flex flex-col px-20 py-12 bg-primary/[0.2] md:bg-hero-side bg-cover bg-no-repeat overflow-y-hidden">
         <a
           className="self-center md:self-start text-primary md:text-white text-[29px] font-bold"
           href="/"
@@ -149,7 +149,7 @@ function SignUp() {
         </p>
       </section>
       {!isRegister ? (
-        <section className="absolute top-[25%] w-[90%] md:static md:w-1/2 h-screen flex flex-col rounded-[20px] md:rounded-none gap-y-7 px-5 md:px-12 py-12 bg-white">
+        <section className="absolute top-[25%] w-[90%] md:static md:w-1/2 h-full min-h-screen flex flex-col rounded-[20px] md:rounded-none space-y-2 px-5 md:px-12 py-12 bg-white">
           <h2 className="md:hidden self-center text-2xl font-bold text-[#3A3D42]">
             Sign Up
           </h2>
@@ -229,7 +229,7 @@ function SignUp() {
       ) : (
         <div className="create-pin absolute top-[25%] md:static md:w-1/2">
           {!isCreatePin ? (
-            <section className=" h-screen flex flex-col rounded-[20px] md:rounded-none px-5 md:px-12 py-12 bg-white overflow-hidden">
+            <section className=" h-full min-h-screen flex flex-col rounded-[20px] md:rounded-none px-5 md:px-12 py-12 bg-white overflow-hidden">
               <h2 className="md:hidden self-center text-2xl font-bold text-[#3A3D42]">
                 Create Security PIN
               </h2>
@@ -308,7 +308,7 @@ function SignUp() {
       )}
       <div
         id="alert-error"
-        className="opacity-0  fixed top-0 left-0 w-screen h-screen flex flex-row justify-center items-center bg-[#000000CC] transition-all ease-in-out duration-1000 pointer-events-none"
+        className="opacity-0 fixed top-0 left-0 w-screen h-screen flex flex-row justify-center items-center bg-[#000000CC] transition-all ease-in-out duration-1000 pointer-events-none"
       >
         <div className="bg-white h-fit flex flex-col items-center justify-center gap-y-7 rounded-[2px] px-12 py-5">
           <p className="font-bold text-blue-700 text-xl">
