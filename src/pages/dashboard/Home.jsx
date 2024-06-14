@@ -443,12 +443,12 @@ function Home() {
                   <div className="font-bold text-lg leading-[25px]">
                     Transaction History
                   </div>
-                  <a
-                    href="/history"
+                  <Link
+                    to="/history"
                     className="font-bold text-sm text-[#6379F4]"
                   >
                     See all
-                  </a>
+                  </Link>
                 </div>
                 {hist &&
                   hist

@@ -1,4 +1,3 @@
-import bgFirstSection from '../../assets/bg-first-section.svg';
 import zwalletLogo from '../../assets/zwallet-logo.svg';
 import support from '../../assets/support.svg';
 import dataPrivacy from '../../assets/data-privacy.svg';
@@ -116,10 +115,7 @@ function LandingPage() {
   return (
     <div className="min-w-screen font-nunito mx-auto">
       {/* First Section */}
-      <section
-        className="w-full bg-no-repeat bg-cover bg-center px-[50px] md:px-[150px] py-[63px]"
-        style={{ backgroundImage: `url(${bgFirstSection})` }}
-      >
+      <section className="w-full bg-hero-home bg-no-repeat bg-cover bg-center px-[50px] md:px-[150px] py-[63px]">
         <main>
           <div className="w-[275px] sm:w-full flex flex-col sm:flex-row justify-between gap-10 mx-auto">
             <img src={zwalletLogo} alt="zwallet logo" />

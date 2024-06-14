@@ -125,12 +125,12 @@ function SignUp() {
   return (
     <main className="flex justify-center flex-row w-screen overflow-x-hidden font-nunito">
       <section className="jumbotron w-full md:w-1/2 h-full min-h-screen flex flex-col px-20 py-12 bg-primary/[0.2] md:bg-hero-side bg-cover bg-no-repeat overflow-y-hidden">
-        <a
+        <Link
           className="self-center md:self-start text-primary md:text-white text-[29px] font-bold"
-          href="/"
+          to="/"
         >
           Zwallet
-        </a>
+        </Link>
         <div className="hidden md:block md:pl-16">
           <img
             className="w-[100%] max-w-[385px] h-auto "
@@ -220,9 +220,9 @@ function SignUp() {
             </button>
             <span className="self-center mt-4">
               Already have an account? Let’s{' '}
-              <a className="text-primary" href="/login">
+              <Link className="text-primary" to="/login">
                 Login
-              </a>
+              </Link>
             </span>
           </form>
         </section>
@@ -295,12 +295,12 @@ function SignUp() {
                   the features in Zwallet. Login to your new account and start
                   exploring!
                 </p>
-                <a
+                <Link
                   className="bg-primary text-white text-center font-bold text-[18px] rounded-[12px] p-3 mt-10"
-                  href="/login"
+                  to="/login"
                 >
                   Login Now
-                </a>
+                </Link>
               </div>
             </section>
           )}
