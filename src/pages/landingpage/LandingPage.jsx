@@ -1,4 +1,3 @@
-import bgFirstSection from '../../assets/bg-first-section.svg';
 import zwalletLogo from '../../assets/zwallet-logo.svg';
 import support from '../../assets/support.svg';
 import dataPrivacy from '../../assets/data-privacy.svg';

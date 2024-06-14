@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import useApi from '../../utils/useApi';
 import { login } from '../../store/reducer/user';
 import imageGroup from '../../assets/images/Group 57.png';
@@ -70,12 +70,12 @@ function Login() {
   return (
     <main className="flex justify-center flex-row w-screen overflow-y-hidden font-nunito">
       <section className="jumbotron w-full md:w-1/2 h-full min-h-screen flex flex-col px-20 py-12 bg-primary/[0.2] md:bg-hero-side bg-cover bg-no-repeat overflow-y-hidden">
-        <a
+        <Link
           className="self-center md:self-start text-primary md:text-white text-[29px] font-bold"
-          href="/"
+          to="/"
         >
           Zwallet
-        </a>
+        </Link>
         <div className="hidden md:block md:pl-16">
           <img
             className="w-[100%] max-w-[385px] h-auto "
@@ -149,9 +149,9 @@ function Login() {
               <img src={iconEyeCrossed} alt="" />
             </button>
           </div>
-          <a className="self-end" href="/reset-password">
+          <Link className="self-end" to="/reset-password">
             Forgot password?
-          </a>
+          </Link>
           <button
             className="bg-[#88888f3f] hover:bg-primary hover:text-white text-[#88888F] rounded-[8px] p-4 mt-10"
             type="submit"
@@ -160,9 +160,9 @@ function Login() {
           </button>
           <span className="self-center mt-4">
             Don’t have an account? Let’s{' '}
-            <a className="text-primary" href="/signup">
+            <Link className="text-primary" to="/signup">
               Sign Up
-            </a>
+            </Link>
           </span>
         </form>
       </section>
