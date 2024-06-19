@@ -9,9 +9,10 @@ function Searchinput(props) {
         <Input
           type="search"
           name={props.name}
-          placeholder="Search products..."
+          placeholder="Search user..."
           className="pl-8 pr-4 py-3 h-full placeholder:text-dark/40 border-none bg-dark/10"
           onChange={props.onInputChange}
+          onKeyDown={props.onKeyDown}
         />
       </div>
     </form>
