@@ -14,25 +14,29 @@ import useApi from '../../utils/useApi';
 function Transfer() {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
-  const [users, setUsers] = useState([]);
-
+  const [users, setUsers] = useState(null);
+  // untuk menamoung data search dulu, lalu digunakan untuk ngubah state search dengan onkeydownsearch
+  const [query, setQuery] = useState('');
   const api = useApi();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    setSearch(value);
+    setQuery(value);
+  };
+  const onKeyDownSearch = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      // console.log(query);
+      setSearch(query);
+    }
   };
 
   useEffect(() => {
     const fetchUsers = async () => {
       setLoading(true);
       try {
-        const response = await api.get('/user/all', {
-          params: {
-            search: search,
-          },
-        });
+        const response = await api.get(`/user/all?search=${search}`);
         setUsers(response.data.data);
       } catch (error) {
         console.log(error);
@@ -48,16 +52,21 @@ function Transfer() {
   if (loading) {
     return <div>Loading...</div>;
   }
+  console.log(users);
   return (
     <>
       <Layout>
         <Card className="bg-white border-none drop-shadow-md rounded-3xl">
           <CardHeader className="gap-6 p-[30px]">
             <CardTitle className="text-lg font-bold">Search Receiver</CardTitle>
-            <Searchinput onInputChange={handleInputChange} name="Search" />
+            <Searchinput
+              onInputChange={handleInputChange}
+              onKeyDown={onKeyDownSearch}
+              name="search"
+            />
           </CardHeader>
           <CardContent className="flex flex-col gap-5 px-[30px pb-5">
-            {users.length === 0 ? (
+            {users && users.length === 0 ? (
               <div className="flex items-center mt-4">
                 <svg
                   className="w-10 h-10 me-3 text-gray-200 dark:text-gray-700"
@@ -74,6 +83,7 @@ function Transfer() {
                 </div>
               </div>
             ) : (
+              users &&
               users.map((item) => (
                 <Link key={item.id} to={`/transfers/${item.id}/send`}>
                   <UserLists data={item} isLoading={loading} />
