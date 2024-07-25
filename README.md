@@ -79,7 +79,7 @@ yarn dev
 
 ## Website Interface
 
-> <img src="./src/assets/img/ZWallet-app-home.png" width="946px" alt="ZWallet" />
+> <img src="./src/assets/home.png" width="946px" alt="ZWallet" />
 
 <hr>
 <p align="center">
