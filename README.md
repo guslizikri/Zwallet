@@ -5,11 +5,11 @@
 <p align="center"><img src="./src/assets/img/ZWallet-app.png" width="400px" alt="ZWallet" /></p>
 
 <p align="center">
-    <a href="https://www.fazztrack.com/" target="blank">View Demo Project</a>
+    <a href="https://zwalletfwg19.netlify.app" target="blank">View Demo Project</a>
     ·
     <a href="https://github.com/guslizikri/Zwallet/issues" target="blank">Report Bug</a>
     ·
-    <a href="https://github.com/guslizikri/Zwallet/pulls">Request Feature</a>
+    <a href="https://github.com/guslizikri/Zwallet-API">Related Project</a>
     ·
 </p>
 
@@ -79,7 +79,7 @@ yarn dev
 
 ## Website Interface
 
-> <img src="./src/assets/img/ZWallet-app-home.png" width="946px" alt="ZWallet" />
+> <img src="./src/assets/home.png" width="946px" alt="ZWallet" />
 
 <hr>
 <p align="center">
